@@ -1,0 +1,40 @@
+// src/services/api.js
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+const api = axios.create({
+  baseURL: API_URL,
+  headers: { 'Content-Type': 'application/json' }
+});
+
+export const PatientService = {
+  // Get basic info + history
+  getPatient: async (id) => {
+    const response = await api.get(`/chatbot/paciente/${id}`);
+    return response.data;
+  },
+
+  // Get the specific summary endpoint your partner built
+  getSummary: async (id) => {
+    const response = await api.get(`/chatbot/${id}/resumen`);
+    return response.data;
+  },
+
+  // Send message to chatbot
+  sendMessage: async (pregunta, pacienteId) => {
+    const response = await api.post('/chatbot/consultar', {
+      pregunta,
+      pacienteId
+    });
+    return response.data;
+  },
+  // src/services/api.js
+
+
+  updateStats: async (id, data) => {
+  // data debe ser objeto: { peso: 80, frecuenciaCardiaca: 75 }
+  const response = await api.put(`/chatbot/paciente/${id}`, data);
+  return response.data;
+}
+};
