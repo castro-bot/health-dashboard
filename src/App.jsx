@@ -9,6 +9,7 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import EditVitals from './components/dashboard/EditVitals';
+import ChatWidget from './components/chat/ChatWidget';
 
 const App = () => {
   const { patient, metrics, loading, updateLocalData } = usePatientData(1);
@@ -103,7 +104,9 @@ const App = () => {
         <div className="flex-1 overflow-y-auto px-8 pb-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-slate-800 tracking-tight">Health Overview</h1>
-            <p className="text-slate-500 mt-1 font-medium">Welcome back, {patient?.nombre.split(" ")[0]}</p>
+            <p className="text-slate-500 mt-1 font-medium">
+  Welcome back, {patient?.nombre ? patient.nombre.split(" ")[0] : "User"}
+</p>
           </div>
 
           {/* COLORFUL CARDS (Exact Gradient Match) */}
@@ -253,7 +256,7 @@ const App = () => {
            </div>
         </div>
       </aside>
-
+      <ChatWidget />
       {/* Edit Modal (Logic connected) */}
       {isEditing && (
         <EditVitals
